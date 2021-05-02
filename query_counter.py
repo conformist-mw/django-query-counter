@@ -9,7 +9,7 @@ from tabulate import tabulate
 
 __all__ = [
     'queries_counter',
-    'DjangoQueryCounter'
+    'DjangoQueryCounter',
 ]
 
 DQC_SLOWEST_COUNT = 5
@@ -151,7 +151,7 @@ class QueryLogger:
 
     def print_all_queries(self):
         for query, count in Counter(
-            [q['sql'] for q in self.queries]
+            [q['sql'] for q in self.queries],
         ).most_common():
             print(f'{colorize(count, color="yellow")}: {highlight(query)}')
 
