@@ -3,6 +3,7 @@ import time
 from collections import Counter
 from operator import itemgetter
 
+from django.conf import settings
 from django.db import connection
 from django.utils import termcolors
 from tabulate import tabulate
@@ -11,19 +12,6 @@ __all__ = [
     'queries_counter',
     'DjangoQueryCounter',
 ]
-
-DQC_SLOWEST_COUNT = 5
-DQC_TABULATE_FMT = 'pretty'
-DQC_SLOW_THRESHOLD = 1  # seconds
-DQC_INDENT_SQL = True
-DQC_PYGMENTS_STYLE = 'tango'
-DQC_COUNT_QTY_MAP = {
-    5: 'green',
-    10: 'white',
-    20: 'yellow',
-    30: 'red',
-}
-DQC_PRINT_ALL_QUERIES = True
 
 colorize_map = {
     'yellow': termcolors.make_style(opts='bold', fg='yellow'),
@@ -38,9 +26,9 @@ def colorize(string, color='white'):
 
 
 def get_color_by(count):
-    for _count, color in DQC_COUNT_QTY_MAP.items():
+    for _count, color in settings.DQC_COUNT_QTY_MAP.items():
         if count <= _count:
-            return DQC_COUNT_QTY_MAP[_count]
+            return settings.DQC_COUNT_QTY_MAP[_count]
     return color
 
 
@@ -61,13 +49,13 @@ def highlight(sql):
     sql = sql.strip().replace('%s, ', '').replace('%s', '%s, ..., %s')
 
     if sqlparse:
-        sql = sqlparse.format(sql, reindent=DQC_INDENT_SQL)
+        sql = sqlparse.format(sql, reindent=settings.DQC_INDENT_SQL)
 
     if pygments:
         sql = pygments.highlight(
             sql,
             SqlLexer(),
-            TerminalTrueColorFormatter(style=DQC_PYGMENTS_STYLE),
+            TerminalTrueColorFormatter(style=settings.DQC_PYGMENTS_STYLE),
         )
     return sql
 
@@ -112,8 +100,8 @@ class QueryLogger:
                 self.queries,
                 key=itemgetter('duration'),
                 reverse=True,
-            )[:DQC_SLOWEST_COUNT]
-            if q['duration'] > DQC_SLOW_THRESHOLD
+            )[:settings.DQC_SLOWEST_COUNT]
+            if q['duration'] > settings.DQC_SLOW_THRESHOLD
         }
 
     def count(self):
@@ -134,19 +122,19 @@ class QueryLogger:
         return stats
 
     def print_stats(self):
-        if DQC_PRINT_ALL_QUERIES:
+        if settings.DQC_PRINT_ALL_QUERIES:
             self.print_all_queries()
         stats = self.collect_stats()
         table = self.get_table(stats)
         print(colorize(table, get_color_by(len(self.duplicates))))
-        if not DQC_PRINT_ALL_QUERIES:
+        if not settings.DQC_PRINT_ALL_QUERIES:
             self.print_detailed()
 
     def get_table(self, stats):
         return tabulate(
             [[value for _, value in stats]],
             headers=[h.capitalize() for h, _ in stats],
-            tablefmt=DQC_TABULATE_FMT,
+            tablefmt=settings.DQC_TABULATE_FMT,
         )
 
     def print_all_queries(self):
