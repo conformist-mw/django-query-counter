@@ -1,6 +1,6 @@
 from setuptools import setup
-from query_counter import __version__
 
+from query_counter import __version__
 
 url = (
     'https://github.com/conformist-mw/django-query-counter/'

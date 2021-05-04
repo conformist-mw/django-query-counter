@@ -10,7 +10,7 @@ from tabulate import tabulate
 
 __all__ = [
     'queries_counter',
-    'DjangoQueryCounter',
+    'DjangoQueryCounterMiddleware',
 ]
 
 colorize_map = {
@@ -172,7 +172,7 @@ def queries_counter(func):
     return inner_func
 
 
-class DjangoQueryCounter:
+class DjangoQueryCounterMiddleware:
 
     def __init__(self, get_response):
         self.get_response = get_response
