@@ -13,7 +13,7 @@ setup(
     author='Oleg Smedyuk',
     author_email='conformist.mw@gmail.com',
     description=('Debug tool to print sql queries count to the console'),
-    install_requires=['tabulate==0.8.9'],
+    install_requires=['tabulate'],
     license='MIT',
     keywords='django sql query count',
     url=url,
