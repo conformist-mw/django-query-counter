@@ -8,11 +8,6 @@ from django.db import connection
 from django.utils import termcolors
 from tabulate import tabulate
 
-__all__ = [
-    'queries_counter',
-    'DjangoQueryCounterMiddleware',
-]
-
 colorize_map = {
     'yellow': termcolors.make_style(opts='bold', fg='yellow'),
     'red': termcolors.make_style(opts='bold', fg='red'),
@@ -170,13 +165,3 @@ def queries_counter(func):
 
         return result
     return inner_func
-
-
-class DjangoQueryCounterMiddleware:
-
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    @queries_counter
-    def __call__(self, request):
-        return self.get_response(request)
