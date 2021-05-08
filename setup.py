@@ -15,7 +15,7 @@ setup(
     description=('Debug tool to print sql queries count to the console'),
     install_requires=['tabulate'],
     license='MIT',
-    keywords='django sql query count',
+    keywords='django sql query count management commands',
     url=url,
     packages=[
         'query_counter',
