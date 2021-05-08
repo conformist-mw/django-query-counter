@@ -4,7 +4,7 @@ DEFAUTLS = {
     'DQC_SLOW_THRESHOLD': 1,  # seconds
     'DQC_INDENT_SQL': True,
     'DQC_PYGMENTS_STYLE': 'tango',
-    'DQC_PRINT_ALL_QUERIES': True,
+    'DQC_PRINT_ALL_QUERIES': False,
     'DQC_COUNT_QTY_MAP': {
         5: 'green',
         10: 'white',

@@ -131,7 +131,7 @@ class QueryLogger:
             self.print_all_queries()
         stats = self.collect_stats()
         table = self.get_table(stats)
-        print(colorize(table, get_color_by(len(self.duplicates))))
+        print(colorize(table, get_color_by(sum(self.duplicates.values()))))
         if not print_all:
             self.print_detailed()
 
