@@ -2,6 +2,12 @@ from setuptools import setup
 
 from query_counter import __version__
 
+
+def read_long_description():
+    with open('README.md') as file:
+        return file.read()
+
+
 url = (
     'https://github.com/conformist-mw/django-query-counter/'
     'tarball/{0}'.format(__version__)
@@ -20,10 +26,7 @@ setup(
     packages=[
         'query_counter',
     ],
-    long_description=(
-        'main feature of this project is to provide a decorator to give '
-        'ability to check sql queries even inside management commands.'
-    ),
+    long_description=read_long_description(),
     long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 4 - Beta',
