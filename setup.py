@@ -17,7 +17,6 @@ setup(
     install_requires=['tabulate'],
     license='MIT',
     keywords='django sql query count management commands',
-    url=url,
     packages=[
         'query_counter',
     ],
