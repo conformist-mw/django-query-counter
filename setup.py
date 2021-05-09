@@ -8,11 +8,6 @@ def read_long_description():
         return file.read()
 
 
-url = (
-    'https://github.com/conformist-mw/django-query-counter/'
-    'tarball/{0}'.format(__version__)
-)
-
 setup(
     name='django-query-counter',
     version=__version__,
@@ -28,6 +23,7 @@ setup(
     ],
     long_description=read_long_description(),
     long_description_content_type='text/markdown',
+    url='https://github.com/conformist-mw/django-query-counter',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
