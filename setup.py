@@ -24,6 +24,7 @@ setup(
         'main feature of this project is to provide a decorator to give '
         'ability to check sql queries even inside management commands.'
     ),
+    long_description_content_type='text/markdown',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Web Environment',
