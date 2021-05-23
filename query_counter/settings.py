@@ -1,5 +1,6 @@
 DEFAUTLS = {
     'DQC_SLOWEST_COUNT': 5,
+    'DQC_DUPLICATED_COUNT': 10,
     'DQC_TABULATE_FMT': 'pretty',
     'DQC_SLOW_THRESHOLD': 1,  # seconds
     'DQC_INDENT_SQL': True,

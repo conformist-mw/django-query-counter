@@ -1,4 +1,6 @@
 import functools
+import re
+import json
 import time
 from collections import Counter
 from operator import itemgetter
@@ -49,9 +51,6 @@ def highlight(sql):
     except ImportError:
         sqlparse = None
 
-    # strip repeated `%s, %s, ..., %s` with ellipsis
-    sql = sql.strip().replace('%s, ', '').replace('%s', '%s, ..., %s')
-
     if sqlparse:
         sql = sqlparse.format(sql, reindent=_get_value('DQC_INDENT_SQL'))
 
@@ -76,7 +75,8 @@ class QueryLogger:
         self.start = time.perf_counter()
 
     def __call__(self, execute, sql, params, many, context):
-        current_query = {'sql': sql, 'params': params, 'many': many}
+        stripped_sql = re.sub(r'\(%s.*\)', '(%s, ..., %s)', sql)
+        current_query = {'sql': stripped_sql, 'params': params, 'many': many}
         start = time.monotonic()
         execute(sql, params, many, context)
         duration = time.monotonic() - start
@@ -151,7 +151,9 @@ class QueryLogger:
     def print_detailed(self):
         if self.duplicates:
             print(colorize('Duplicate queries:'))
-            for query, count in self.duplicates.items():
+            for index, (query, count) in enumerate(self.duplicates.items()):
+                if index >= _get_value('DQC_DUPLICATED_COUNT'):
+                    break
                 print(f'{colorize(count, "yellow")}: {highlight(query)}')
         if self.slowest:
             print(colorize('Slowest queries:'))
