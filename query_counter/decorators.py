@@ -1,6 +1,4 @@
-import functools
 import re
-import json
 import time
 from collections import Counter
 from operator import itemgetter
@@ -131,9 +129,9 @@ class QueryLogger:
             self.print_all_queries()
         stats = self.collect_stats()
         table = self.get_table(stats)
-        print(colorize(table, get_color_by(sum(self.duplicates.values()))))
         if not print_all:
             self.print_detailed()
+        print(colorize(table, get_color_by(sum(self.duplicates.values()))))
 
     def get_table(self, stats):
         return tabulate(
@@ -163,17 +161,25 @@ class QueryLogger:
 
 
 def queries_counter(func):
-    @functools.wraps(func)
     def inner_func(*args, **kwargs):
+        func_info = ['Target:']
         query_logger = QueryLogger()
         with connection.execute_wrapper(query_logger):
             result = func(*args, **kwargs)
         query_logger.count()
         try:
-            print('Target func:', func.__qualname__)
-        except AttributeError:
-            pass
+            if len(args) == 1:
+                cmd, = args
+                func_info.append(cmd.__module__)
+            elif len(args) > 1:
+                _, request, *_ = args
+                if request.path:
+                    func_info.append(request.path)
+                if request.resolver_match:
+                    func_info.append(request.resolver_match._func_path)
+        except ValueError:
+            func_info.append(func.__qualname__)
         query_logger.print_stats()
-
+        print(' '.join(func_info))
         return result
     return inner_func
