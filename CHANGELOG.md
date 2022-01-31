@@ -1,4 +1,4 @@
-### History
+### Changelog
 
 #### 0.2.0
 - fix the view/func name after the sql stats table
