@@ -8,7 +8,7 @@ from django.db import connection
 from django.utils import termcolors
 from tabulate import tabulate
 
-from .settings import DEFAUTLS
+from .settings import DEFAULTS
 
 colorize_map = {
     'yellow': termcolors.make_style(opts='bold', fg='yellow'),
@@ -22,7 +22,7 @@ def _get_value(key):
     """"
     Try to get value from django.conf.settings otherwise default
     """
-    return getattr(settings, key, DEFAUTLS[key])
+    return getattr(settings, key, DEFAULTS[key])
 
 
 def colorize(string, color='white'):
