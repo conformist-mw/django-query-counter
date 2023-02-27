@@ -1,5 +1,9 @@
 ### Changelog
 
+#### 0.2.2
+
+- fix decorator type in README.md (Thanks @MichaelAquilina)
+
 #### 0.2.1
 
 - fix `DEFAULTS` settings typo
@@ -9,6 +13,7 @@
 
 - fix the view/func name after the sql stats table
 - move stats table to the bottom
+- introduce CHANGELOG.md (Thanks @DmytroLitvinov)
 
 #### 0.1.0
 
