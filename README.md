@@ -38,7 +38,7 @@ Import the decorator and apply it where you need to know the number of queries
  
  class Command(BaseCommand):
  
-     @query_counter
+     @queries_counter
      def handle(self, *args, **options):
          pass
  ```
