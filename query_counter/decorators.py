@@ -18,8 +18,8 @@ def _get_value(key):
     return getattr(settings, key, DEFAULTS[key])
 
 
-def _print(lines) -> None:
-    print('\n'.join(lines))  # noqa: T201
+def _print(lines, sep: str = '\n') -> None:
+    print(f'{sep}'.join(lines))  # noqa: T201
 
 
 def colorize(string: str, color: str = 'white') -> str:
@@ -193,6 +193,6 @@ def queries_counter(func):
         except ValueError:
             func_info.append(func.__qualname__)
         query_logger.print_stats()
-        _print(' '.join(func_info))
+        _print(func_info, sep=' ')
         return result
     return inner_func
