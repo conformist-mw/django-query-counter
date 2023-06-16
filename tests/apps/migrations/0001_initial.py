@@ -10,65 +10,65 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Child",
+            name='Child',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
-                ("name", models.CharField(max_length=10)),
+                ('name', models.CharField(max_length=10)),
             ],
         ),
         migrations.CreateModel(
-            name="Parent",
+            name='Parent',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
-                ("name", models.CharField(max_length=10)),
+                ('name', models.CharField(max_length=10)),
             ],
         ),
         migrations.CreateModel(
-            name="Grandson",
+            name='Grandson',
             fields=[
                 (
-                    "id",
+                    'id',
                     models.BigAutoField(
                         auto_created=True,
                         primary_key=True,
                         serialize=False,
-                        verbose_name="ID",
+                        verbose_name='ID',
                     ),
                 ),
-                ("name", models.CharField(max_length=10)),
+                ('name', models.CharField(max_length=10)),
                 (
-                    "child",
+                    'child',
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="grandchildren",
-                        to="app.child",
+                        related_name='grandchildren',
+                        to='apps.child',
                     ),
                 ),
             ],
         ),
         migrations.AddField(
-            model_name="child",
-            name="parent",
+            model_name='child',
+            name='parent',
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
-                related_name="children",
-                to="app.parent",
+                related_name='children',
+                to='apps.parent',
             ),
         ),
     ]
