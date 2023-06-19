@@ -12,20 +12,20 @@ legacy_tox_ini = """
     [testenv]
     deps =
         pytest>=7
+        pytest-django
         django32: Django>=3.2,<3.3
         django40: Django>=4.0,<4.1
         django41: Django>=4.1,<4.2
         django42: Django>=4.2,<5.0
     set_env =
         PYTHONDEVMODE = 1
-    skip_install = true
-    commands = pytest -r {posargs:.}
+    commands = pytest -Wa -r {posargs:.}
 
     [testenv:lint]
     description = run linters
     skip_install = true
     deps =
-        ruff==0.0.269
+        ruff==0.0.275
     commands = ruff {posargs:query_counter}
 """
 
@@ -46,3 +46,7 @@ select = [
 ]
 [tool.ruff.flake8-quotes]
 inline-quotes = "single"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "settings"
+pythonpath = "tests"
