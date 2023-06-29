@@ -1,20 +1,27 @@
-Django Queries Count
----
+# Django Queries Count
 
 The difference between this project and all the others like it is that I needed
  to debug management command in Django, but all the others only provided middleware,
  which did not solve my problem.
 
-### Example output
-![duplicates-main-example](https://user-images.githubusercontent.com/13550539/117552176-89c30b80-b052-11eb-80b9-7eb32435d116.png)
+## Example output
 
+![duplicates-main-example](https://user-images.githubusercontent.com/13550539/117552176-89c30b80-b052-11eb-80b9-7eb32435d116.png)
 
 The basic idea is to count duplicate queries, like django-debug-toolbar does,
  and output them. The number of duplicated queries and the color of the theme
  can be specified in the settings. It is also possible to output all requests
  at once (counted if they are duplicated).
 
-### Installation
+## Content
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Available settings](#available-settings)
+- [Additional screenshots](#additional-screenshots)
+- [Contribute](#contribute)
+
+## Installation
 
 It is enough to install the package and apply the decorator to the desired
  management command or view.
@@ -23,7 +30,7 @@ It is enough to install the package and apply the decorator to the desired
 pip install django-query-counter
 ```
 
-### Usage
+## Usage
 
 The project can be used in two ways:
 
@@ -33,46 +40,46 @@ Import the decorator and apply it where you need to know the number of queries
 - management command:
 
  ```python
- from django.core.management.base import BaseCommand
- from query_counter.decorators import queries_counter
- 
- class Command(BaseCommand):
- 
-     @queries_counter
-     def handle(self, *args, **options):
-         pass
+from django.core.management.base import BaseCommand
+from query_counter.decorators import queries_counter
+
+class Command(BaseCommand):
+
+    @queries_counter
+    def handle(self, *args, **options):
+        pass
  ```
 
-- general view:
-  - function-based views
+- function-based views
 
-  ```python
-  from query_counter.decorators import queries_counter
-  
-  
-  @queries_counter
-  def index(request):
-      pass
-  ```
-  
-  - class-based views:
- 
-  ```python
-  from django.utils.decorators import method_decorator
-  from query_counter.decorators import queries_counter
-  
-  @method_decorator(queries_counter, name='dispatch')
-  class IndexView(View):
-     pass
-  ```
+```python
+from query_counter.decorators import queries_counter
+
+
+@queries_counter
+def index(request):
+    pass
+```
+
+- class-based views:
+
+```python
+from django.utils.decorators import method_decorator
+from query_counter.decorators import queries_counter
+
+
+@method_decorator(queries_counter, name='dispatch')
+class IndexView(View):
+    pass
+```
 
 - specifying middleware in settings for all views at once.
-  ```python
-  MIDDLEWARE = [
+
+```python
+MIDDLEWARE = [
     'query_counter.middleware.DjangoQueryCounterMiddleware',
-    ...
-  ]
-  ```
+]
+```
 
 ### Available settings
 
@@ -90,18 +97,19 @@ INSTALLED_APPS = [
 Default settings:
 
 ```python
+{
     'DQC_SLOWEST_COUNT': 5,
     'DQC_TABULATE_FMT': 'pretty',
     'DQC_SLOW_THRESHOLD': 1,  # seconds
     'DQC_INDENT_SQL': True,
-    'DQC_PYGMENTS_STYLE': 'tango'
+    'DQC_PYGMENTS_STYLE': 'tango',
     'DQC_PRINT_ALL_QUERIES': False,
     'DQC_COUNT_QTY_MAP': {
         5: 'green',
         10: 'white',
         20: 'yellow',
         30: 'red',
-    },
+}
 ```
 
 Feel free to override any of them.
@@ -114,7 +122,6 @@ Pygments styles available [here](https://pygments.org/demo/).
 ![good_example](https://user-images.githubusercontent.com/13550539/117552177-8a5ba200-b052-11eb-8b6b-e66521aebdd6.png)
 ![yellow_example](https://user-images.githubusercontent.com/13550539/117552179-8af43880-b052-11eb-85ca-65df4eca3ea7.png)
 
-
 ### Contribute
 
 Feel free to open an issue to report of any bugs. Bug fixes and features are
@@ -122,9 +129,8 @@ Feel free to open an issue to report of any bugs. Bug fixes and features are
 
 #### Release
 
-```python
+```shell
 python setup.py sdist bdist_wheel
 twine check dist/*
 twine upload dist/*
 ```
-

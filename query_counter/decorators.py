@@ -10,13 +10,6 @@ from tabulate import tabulate
 
 from .settings import DEFAULTS
 
-colorize_map = {
-    'yellow': termcolors.make_style(opts='bold', fg='yellow'),
-    'red': termcolors.make_style(opts='bold', fg='red'),
-    'white': termcolors.make_style(opts='bold', fg='white'),
-    'green': termcolors.make_style(opts='bold', fg='green'),
-}
-
 
 def _get_value(key):
     """"
@@ -25,8 +18,17 @@ def _get_value(key):
     return getattr(settings, key, DEFAULTS[key])
 
 
-def colorize(string, color='white'):
-    return colorize_map[color](string)
+def _print(lines, sep: str = '\n') -> None:
+    print(f'{sep}'.join(lines))  # noqa: T201
+
+
+def colorize(string: str, color: str = 'white') -> str:
+    return {
+        'yellow': termcolors.make_style(opts='bold', fg='yellow'),
+        'red': termcolors.make_style(opts='bold', fg='red'),
+        'white': termcolors.make_style(opts='bold', fg='white'),
+        'green': termcolors.make_style(opts='bold', fg='green'),
+    }[color](string)
 
 
 def get_color_by(count):
@@ -67,9 +69,9 @@ class QueryLogger:
 
     def __init__(self):
         self.queries = []
-        self.duplicates = []
-        self.slowest = []
-        self.counted = []
+        self.duplicates = {}
+        self.slowest = {}
+        self.counted = None
         self.start = time.perf_counter()
 
     def __call__(self, execute, sql, params, many, context):
@@ -81,13 +83,13 @@ class QueryLogger:
         current_query['duration'] = duration
         self.queries.append(current_query)
 
-    def do_count(self):
+    def do_count(self) -> Counter:
         return Counter([
             q['sql'].split()[0]
             for q in self.queries if q['sql'].startswith(self.SQL_STATEMENTS)
         ])
 
-    def count_duplicated(self):
+    def count_duplicated(self) -> dict[str, int]:
         return {
             query: count
             for query, count
@@ -95,7 +97,7 @@ class QueryLogger:
             if count > 1
         }
 
-    def get_slowest(self):
+    def get_slowest(self) -> dict[str, float]:
         return {
             q['sql']: q['duration']
             for q in sorted(
@@ -106,7 +108,7 @@ class QueryLogger:
             if q['duration'] > _get_value('DQC_SLOW_THRESHOLD')
         }
 
-    def count(self):
+    def count(self) -> None:
         self.elapsed = time.perf_counter() - self.start
         self.counted = self.do_count()
         self.slowest = self.get_slowest()
@@ -124,14 +126,19 @@ class QueryLogger:
         return stats
 
     def print_stats(self):
+        lines_to_print = []
         print_all = _get_value('DQC_PRINT_ALL_QUERIES')
         if print_all:
-            self.print_all_queries()
+            lines_to_print.extend(self.generate_all_queries_lines())
         stats = self.collect_stats()
         table = self.get_table(stats)
         if not print_all:
-            self.print_detailed()
-        print(colorize(table, get_color_by(sum(self.duplicates.values()))))
+            lines_to_print.extend(self.generate_detailed_lines())
+        lines_to_print.append(
+            colorize(table, get_color_by(sum(self.duplicates.values()))),
+        )
+
+        _print(lines_to_print)
 
     def get_table(self, stats):
         return tabulate(
@@ -140,24 +147,30 @@ class QueryLogger:
             tablefmt=_get_value('DQC_TABULATE_FMT'),
         )
 
-    def print_all_queries(self):
+    def generate_all_queries_lines(self) -> list[str]:
+        lines = []
         for query, count in Counter(
             [q['sql'] for q in self.queries],
         ).most_common():
-            print(f'{colorize(count, color="yellow")}: {highlight(query)}')
+            lines.append(
+                f'{colorize(str(count), color="yellow")}: {highlight(query)}',
+            )
+        return lines
 
-    def print_detailed(self):
+    def generate_detailed_lines(self) -> list[str]:
+        lines = []
         if self.duplicates:
-            print(colorize('Duplicate queries:'))
+            lines.append(colorize('Duplicate queries:'))
             for index, (query, count) in enumerate(self.duplicates.items()):
                 if index >= _get_value('DQC_DUPLICATED_COUNT'):
                     break
-                print(f'{colorize(count, "yellow")}: {highlight(query)}')
+                lines.append(f'{colorize(count, "yellow")}: {highlight(query)}')
         if self.slowest:
-            print(colorize('Slowest queries:'))
+            lines.append(colorize('Slowest queries:'))
             for query, duration in self.slowest.items():
                 duration = f'{duration:.2f}'
-                print(f'{colorize(duration, "red")}: {highlight(query)}')
+                lines.append(f'{colorize(duration, "red")}: {highlight(query)}')
+        return lines
 
 
 def queries_counter(func):
@@ -180,6 +193,6 @@ def queries_counter(func):
         except ValueError:
             func_info.append(func.__qualname__)
         query_logger.print_stats()
-        print(' '.join(func_info))
+        _print(func_info, sep=' ')
         return result
     return inner_func

@@ -12,7 +12,7 @@ setup(
     name='django-query-counter',
     version=__version__,
     author='Oleg Smedyuk',
-    author_email='conformist.mw@gmail.com',
+    author_email='oleg.smedyuk@gmail.com',
     description=('Debug tool to print sql queries count to the console'),
     install_requires=['tabulate'],
     license='MIT',

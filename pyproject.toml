@@ -1,0 +1,52 @@
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    requires =
+        tox>=4.5
+    env_list =
+      lint
+      py311-django{42, 41}
+      py310-django{42, 41, 40, 32}
+      py39-django{42, 41, 40, 32}
+
+    [testenv]
+    deps =
+        pytest>=7
+        pytest-django
+        django32: Django>=3.2,<3.3
+        django40: Django>=4.0,<4.1
+        django41: Django>=4.1,<4.2
+        django42: Django>=4.2,<5.0
+    set_env =
+        PYTHONDEVMODE = 1
+    commands = pytest -Wa -r {posargs:.}
+
+    [testenv:lint]
+    description = run linters
+    skip_install = true
+    deps =
+        ruff==0.0.275
+    commands = ruff {posargs:query_counter}
+"""
+
+[tool.ruff]
+line-length = 80
+fix = false
+ignore-init-module-imports = true
+select = [
+  "E",    # pycodestyle
+  "F",    # pyflakes
+  "I",    # isort
+  "A",    # flake8-builtins
+  "COM",  # flake8-commas
+  "T20",  # flake8-print
+  "Q",    # flake8-quotes
+  "BLE",  # flake8-blind-except
+  "N",    # pep8-naming
+]
+[tool.ruff.flake8-quotes]
+inline-quotes = "single"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "settings"
+pythonpath = "tests"
