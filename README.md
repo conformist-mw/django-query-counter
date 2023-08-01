@@ -109,6 +109,7 @@ Default settings:
         10: 'white',
         20: 'yellow',
         30: 'red',
+    },
 }
 ```
 
