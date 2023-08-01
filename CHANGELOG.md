@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1
+
+- fix an unclosed curly bracket
+- introduce .gitignore
+
+## 0.3.0
+
+- prettify markdown files
+- add smoke tests using tox
+
 ## 0.2.2
 
 - fix decorator type in README.md (Thanks @MichaelAquilina)
