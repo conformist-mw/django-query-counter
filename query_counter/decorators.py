@@ -2,6 +2,7 @@ import re
 import time
 from collections import Counter
 from operator import itemgetter
+from typing import Dict, List
 
 from django.conf import settings
 from django.db import connection
@@ -89,7 +90,7 @@ class QueryLogger:
             for q in self.queries if q['sql'].startswith(self.SQL_STATEMENTS)
         ])
 
-    def count_duplicated(self) -> dict[str, int]:
+    def count_duplicated(self) -> Dict[str, int]:
         return {
             query: count
             for query, count
@@ -97,7 +98,7 @@ class QueryLogger:
             if count > 1
         }
 
-    def get_slowest(self) -> dict[str, float]:
+    def get_slowest(self) -> Dict[str, float]:
         return {
             q['sql']: q['duration']
             for q in sorted(
@@ -157,7 +158,7 @@ class QueryLogger:
             )
         return lines
 
-    def generate_detailed_lines(self) -> list[str]:
+    def generate_detailed_lines(self) -> List[str]:
         lines = []
         if self.duplicates:
             lines.append(colorize('Duplicate queries:'))
