@@ -1,5 +1,6 @@
 # Django Queries Count
 
+[![check](https://github.com/conformist-mw/django-query-counter/actions/workflows/check.yml/badge.svg)](https://github.com/conformist-mw/django-query-counter/actions/workflows/check.yml)
 [![PyPI version](https://badge.fury.io/py/django-query-counter.svg)](https://badge.fury.io/py/django-query-counter)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-query-counter)
 ![PyPI - Versions from Framework Classifiers](https://img.shields.io/pypi/frameworkversions/django/django-query-counter)

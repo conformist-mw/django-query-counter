@@ -148,7 +148,7 @@ class QueryLogger:
             tablefmt=_get_value('DQC_TABULATE_FMT'),
         )
 
-    def generate_all_queries_lines(self) -> list[str]:
+    def generate_all_queries_lines(self) -> List[str]:
         lines = []
         for query, count in Counter(
             [q['sql'] for q in self.queries],
