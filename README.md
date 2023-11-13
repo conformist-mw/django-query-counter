@@ -1,5 +1,10 @@
 # Django Queries Count
 
+[![PyPI version](https://badge.fury.io/py/django-query-counter.svg)](https://badge.fury.io/py/django-query-counter)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-query-counter)
+![PyPI - Versions from Framework Classifiers](https://img.shields.io/pypi/frameworkversions/django/django-query-counter)
+
+
 The difference between this project and all the others like it is that I needed
  to debug management command in Django, but all the others only provided middleware,
  which did not solve my problem.
