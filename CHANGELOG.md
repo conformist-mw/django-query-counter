@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.4.0
+
+- integrate github actions
+- fix py38 support
+
 ## 0.3.1
 
 - fix an unclosed curly bracket
