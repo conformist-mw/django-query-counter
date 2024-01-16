@@ -36,6 +36,22 @@ It is enough to install the package and apply the decorator to the desired
 pip install django-query-counter
 ```
 
+Please take note that the colored and reformatted SQL output depicted in
+the readme screenshots may not be achieved unless the specified additional
+packages are installed (which maybe already installed):
+
+- colorize requires [pygments](https://pypi.org/project/Pygments/)
+
+```shell
+pip install Pygments
+```
+
+- reformat requires [sqlparse](https://pypi.org/project/sqlparse/)
+
+```shell
+pip install sqlparse
+```
+
 ## Usage
 
 The project can be used in two ways:
