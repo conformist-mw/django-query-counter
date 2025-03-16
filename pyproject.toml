@@ -14,9 +14,16 @@ version = "0.4.1"
 description = "Debug tool to print SQL queries count to the console"
 authors = [{name = "Oleg Smedyuk", email = "oleg.smedyuk@gmail.com"}]
 license = "MIT"
-keywords = ["django", "sql", "query", "count", "management", "commands"]
+keywords = [
+  "django",
+  "sql",
+  "query",
+  "count",
+  "management",
+  "commands",
+]
 readme = "README.md"
-requires-python = ">= 3.8"
+requires-python = ">= 3.9"
 
 dependencies = [
   "tabulate"
@@ -35,17 +42,20 @@ classifiers = [
   "Framework :: Django :: 4.1",
   "Framework :: Django :: 4.2",
   "Framework :: Django :: 5.0",
+  "Framework :: Django :: 5.1",
+  "Framework :: Django :: 5.2",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.9",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: Implementation :: CPython",
 ]
 
 [project.urls]
-Homepage = "https://github.com/conformist-mw/django-query-counter"
+Repository = "https://github.com/conformist-mw/django-query-counter"
 Changelog = "https://github.com/conformist-mw/django-query-counter/blob/master/CHANGELOG.md"
 
 [dependency-groups]
@@ -64,9 +74,10 @@ legacy_tox_ini = """
         tox>=4.5
     env_list =
       lint
-      py312-django{50, 42}
-      py311-django{50, 42, 41}
-      py310-django{50, 42, 41, 40, 32}
+      py313-django{51}
+      py312-django{51, 50, 42}
+      py311-django{51, 50, 42, 41}
+      py310-django{51, 50, 42, 41, 40, 32}
       py39-django{42, 41, 40, 32}
       py38-django{42, 41, 40, 32}
 
@@ -79,6 +90,7 @@ legacy_tox_ini = """
         django41: Django>=4.1,<4.2
         django42: Django>=4.2,<5.0
         django50: Django>=5.0,<5.1
+        django51: Django>=5.1,<5.2
     set_env =
         PYTHONDEVMODE = 1
     commands = pytest -Wa -r {posargs:.}
@@ -90,6 +102,7 @@ legacy_tox_ini = """
         3.10: py310
         3.11: py311
         3.12: py312
+        3.13: py313
 
     [gh-actions:env]
     DJANGO =
@@ -98,13 +111,14 @@ legacy_tox_ini = """
         4.1: dj41
         4.2: dj42
         5.0: dj50
+        5.1: dj51
 
     [testenv:lint]
     description = run linters
     skip_install = true
     deps =
-        ruff==0.1.13
-    commands = ruff {posargs:query_counter}
+        ruff
+    commands = ruff check {posargs:query_counter}
 """
 
 [tool.ruff]
