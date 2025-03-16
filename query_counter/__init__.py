@@ -1,5 +1,3 @@
-__version__ = '0.4.0'
-
 try:
     import django
     if django.VERSION < (3, 2):

@@ -149,11 +149,3 @@ Pygments styles available [here](https://pygments.org/demo/).
 
 Feel free to open an issue to report of any bugs. Bug fixes and features are
  welcome! Be sure to add yourself to the AUTHORS.md if you provide PR.
-
-#### Release
-
-```shell
-python setup.py sdist bdist_wheel
-twine check dist/*
-twine upload dist/*
-```
