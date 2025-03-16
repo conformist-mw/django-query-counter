@@ -48,6 +48,15 @@ classifiers = [
 Homepage = "https://github.com/conformist-mw/django-query-counter"
 Changelog = "https://github.com/conformist-mw/django-query-counter/blob/master/CHANGELOG.md"
 
+[dependency-groups]
+dev = [
+  "django",
+  "pytest",
+  "pytest-django",
+  "ruff",
+  "tox",
+]
+
 [tool.tox]
 legacy_tox_ini = """
     [tox]
@@ -101,7 +110,7 @@ legacy_tox_ini = """
 [tool.ruff]
 line-length = 80
 fix = false
-ignore-init-module-imports = true
+[tool.ruff.lint]
 select = [
   "E",    # pycodestyle
   "F",    # pyflakes
@@ -113,7 +122,8 @@ select = [
   "BLE",  # flake8-blind-except
   "N",    # pep8-naming
 ]
-[tool.ruff.flake8-quotes]
+
+[tool.ruff.lint.flake8-quotes]
 inline-quotes = "single"
 
 [tool.pytest.ini_options]
