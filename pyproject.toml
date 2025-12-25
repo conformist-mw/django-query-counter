@@ -51,6 +51,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 
@@ -74,12 +75,12 @@ legacy_tox_ini = """
         tox>=4.5
     env_list =
       lint
-      py313-django{51}
-      py312-django{51, 50, 42}
-      py311-django{51, 50, 42, 41}
-      py310-django{51, 50, 42, 41, 40, 32}
+      py314-django{60, 52}
+      py313-django{60, 52, 51}
+      py312-django{60, 52, 51, 50, 42}
+      py311-django{52, 51, 50, 42, 41}
+      py310-django{52, 51, 50, 42, 41, 40, 32}
       py39-django{42, 41, 40, 32}
-      py38-django{42, 41, 40, 32}
 
     [testenv]
     deps =
@@ -91,18 +92,19 @@ legacy_tox_ini = """
         django42: Django>=4.2,<5.0
         django50: Django>=5.0,<5.1
         django51: Django>=5.1,<5.2
+        django60: Django>=6
     set_env =
         PYTHONDEVMODE = 1
     commands = pytest -Wa -r {posargs:.}
 
     [gh-actions]
     python =
-        3.8: py38
         3.9: py39
         3.10: py310
         3.11: py311
         3.12: py312
         3.13: py313
+        3.14: py314
 
     [gh-actions:env]
     DJANGO =
@@ -112,6 +114,8 @@ legacy_tox_ini = """
         4.2: dj42
         5.0: dj50
         5.1: dj51
+        5.2: dj52
+        6.0: dj60
 
     [testenv:lint]
     description = run linters
