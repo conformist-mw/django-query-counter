@@ -15,5 +15,5 @@ def test_view_with_decorator(
         assert response.status_code == 200
 
     out, err = capsys.readouterr()
-    assert '9\x1b[0m: SELECT "apps_grandson"."id"' in out
+    assert 'mSELECT\x1b[39;00m\x1b[38;2;248;248;248m \x1b[39m\x1b[38;2;78;154;6m"apps_grandson"' in out
     assert 'Target: / urls.index' in out
