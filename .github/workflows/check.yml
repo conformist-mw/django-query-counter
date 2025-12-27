@@ -44,4 +44,4 @@ jobs:
 
       - uses: astral-sh/ruff-action@v3
         with:
-          src: "./query_counter"
+          args: "check query_counter"
