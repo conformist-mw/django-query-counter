@@ -34,3 +34,14 @@ jobs:
 
     - name: Run tox targets for ${{ matrix.python-version }}
       run: uvx --with tox-uv tox run -f py$(echo ${{ matrix.python-version }} | tr -d .)
+
+  lint:
+    name: run ruff check
+    runs-on:
+
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/ruff-action@v3
+        with:
+          src: "./query_counter"
