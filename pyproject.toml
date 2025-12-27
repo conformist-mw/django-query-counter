@@ -44,6 +44,7 @@ classifiers = [
   "Framework :: Django :: 5.0",
   "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
+  "Framework :: Django :: 6.0",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.9",
@@ -66,64 +67,37 @@ dev = [
   "pytest-django",
   "ruff",
   "tox",
+  "tox-uv",
 ]
 
-[tool.tox]
-legacy_tox_ini = """
-    [tox]
-    requires =
-        tox>=4.5
-    env_list =
-      lint
-      py314-django{60, 52}
-      py313-django{60, 52, 51}
-      py312-django{60, 52, 51, 50, 42}
-      py311-django{52, 51, 50, 42, 41}
-      py310-django{52, 51, 50, 42, 41, 40, 32}
-      py39-django{42, 41, 40, 32}
+test = [
+  "pytest>=7",
+  "pytest-django",
+  "tabulate",
+  "django",
+]
+django32 = [ "django>=3.2,<3.3; python_version>='3.9'" ]
+django40 = [ "django>=4.0,<4.1; python_version>='3.9'" ]
+django41 = [ "django>=4.1,<4.2; python_version>='3.9'" ]
+django42 = [ "django>=4.2,<5; python_version>='3.9'" ]
+django50 = [ "django>=5,<5.1; python_version>='3.10'" ]
+django51 = [ "django>=5.1,<5.2; python_version>='3.10'" ]
+django52 = [ "django>=5.2,<6; python_version>='3.10'" ]
+django60 = [ "django>=6,<6.1; python_version>='3.12'" ]
 
-    [testenv]
-    deps =
-        pytest>=7
-        pytest-django
-        django32: Django>=3.2,<3.3
-        django40: Django>=4.0,<4.1
-        django41: Django>=4.1,<4.2
-        django42: Django>=4.2,<5.0
-        django50: Django>=5.0,<5.1
-        django51: Django>=5.1,<5.2
-        django60: Django>=6
-    set_env =
-        PYTHONDEVMODE = 1
-    commands = pytest -Wa -r {posargs:.}
-
-    [gh-actions]
-    python =
-        3.9: py39
-        3.10: py310
-        3.11: py311
-        3.12: py312
-        3.13: py313
-        3.14: py314
-
-    [gh-actions:env]
-    DJANGO =
-        3.2: dj32
-        4.0: dj40
-        4.1: dj41
-        4.2: dj42
-        5.0: dj50
-        5.1: dj51
-        5.2: dj52
-        6.0: dj60
-
-    [testenv:lint]
-    description = run linters
-    skip_install = true
-    deps =
-        ruff
-    commands = ruff check {posargs:query_counter}
-"""
+[tool.uv]
+conflicts = [
+  [
+    { group = "django32" },
+    { group = "django40" },
+    { group = "django41" },
+    { group = "django42" },
+    { group = "django50" },
+    { group = "django51" },
+    { group = "django52" },
+    { group = "django60" },
+  ],
+]
 
 [tool.ruff]
 line-length = 80
@@ -147,3 +121,46 @@ inline-quotes = "single"
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "settings"
 pythonpath = "tests"
+
+
+[tool.tox]
+legacy_tox_ini = """
+  [tox]
+  requires =
+      tox>=4.2
+  env_list =
+      py314-django{60, 52}
+      py313-django{60, 52, 51}
+      py312-django{60, 52, 51, 50, 42}
+      py311-django{52, 51, 50, 42, 41}
+      py310-django{52, 51, 50, 42, 41, 40, 32}
+      py39-django{42, 41, 40, 32}
+
+  [testenv]
+  deps =
+      pytest>=7
+      pytest-django
+  runner = uv-venv-lock-runner
+  package = wheel
+  wheel_build_env = .pkg
+  set_env =
+      PYTHONDEVMODE = 1
+  commands = pytest -Wa -r {posargs:.}
+  dependency_groups =
+      test
+      django32: django32
+      django40: django40
+      django41: django41
+      django42: django42
+      django50: django50
+      django51: django51
+      django52: django52
+      django60: django60
+
+  [testenv:lint]
+  description = run linters
+  skip_install = true
+  deps =
+      ruff
+  commands = ruff check {posargs:query_counter}
+"""
