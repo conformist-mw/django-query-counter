@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.2
+
+- added check for django6/py3.14
+
+## 0.4.1
+
+- migrate to uv
+- migrate meta to pyproject.toml
+
 ## 0.4.0
 
 - integrate github actions
