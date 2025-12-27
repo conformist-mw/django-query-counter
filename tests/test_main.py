@@ -15,5 +15,5 @@ def test_view_with_decorator(
         assert response.status_code == 200
 
     out, err = capsys.readouterr()
-    assert 'SELECT "apps_grandson"."id"' in out
+    assert 'Duplicate queries:' in out
     assert 'Target: / urls.index' in out
