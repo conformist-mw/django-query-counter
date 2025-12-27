@@ -1,6 +1,7 @@
-from .settings import DEFAULTS
 from django.apps import AppConfig
 from django.conf import settings
+
+from .settings import DEFAULTS
 
 
 class DjangoQueryCounterConfig(AppConfig):
