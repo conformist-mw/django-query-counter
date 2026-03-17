@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.0
+
+- added DQC_ENABLED setting to disable output (#24)
+
 ## 0.4.2
 
 - added check for django6/py3.14

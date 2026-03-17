@@ -10,7 +10,7 @@ packages = ["query_counter"]
 
 [project]
 name = "django-query-counter"
-version = "0.4.2"
+version = "0.5.0"
 description = "Debug tool to print SQL queries count to the console"
 authors = [{name = "Oleg Smedyuk", email = "oleg.smedyuk@gmail.com"}]
 license = "MIT"
