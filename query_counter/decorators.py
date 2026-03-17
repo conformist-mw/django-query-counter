@@ -176,6 +176,8 @@ class QueryLogger:
 
 def queries_counter(func):
     def inner_func(*args, **kwargs):
+        if not _get_value('DQC_ENABLED'):
+            return func(*args, **kwargs)
         func_info = ['Target:']
         query_logger = QueryLogger()
         with connection.execute_wrapper(query_logger):

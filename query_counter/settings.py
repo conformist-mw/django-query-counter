@@ -1,4 +1,5 @@
 DEFAULTS = {
+    'DQC_ENABLED': True,
     'DQC_SLOWEST_COUNT': 5,
     'DQC_DUPLICATED_COUNT': 10,
     'DQC_TABULATE_FMT': 'pretty',
