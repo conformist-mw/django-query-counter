@@ -2,7 +2,6 @@ import re
 import time
 from collections import Counter
 from operator import itemgetter
-from typing import Dict, List
 
 from django.conf import settings
 from django.db import connection
@@ -13,9 +12,7 @@ from .settings import DEFAULTS
 
 
 def _get_value(key):
-    """"
-    Try to get value from django.conf.settings otherwise default
-    """
+    """Try to get value from django.conf.settings otherwise default."""
     return getattr(settings, key, DEFAULTS[key])
 
 
@@ -90,7 +87,7 @@ class QueryLogger:
             for q in self.queries if q['sql'].startswith(self.SQL_STATEMENTS)
         ])
 
-    def count_duplicated(self) -> Dict[str, int]:
+    def count_duplicated(self) -> dict[str, int]:
         return {
             query: count
             for query, count
@@ -98,7 +95,7 @@ class QueryLogger:
             if count > 1
         }
 
-    def get_slowest(self) -> Dict[str, float]:
+    def get_slowest(self) -> dict[str, float]:
         return {
             q['sql']: q['duration']
             for q in sorted(
@@ -148,7 +145,7 @@ class QueryLogger:
             tablefmt=_get_value('DQC_TABULATE_FMT'),
         )
 
-    def generate_all_queries_lines(self) -> List[str]:
+    def generate_all_queries_lines(self) -> list[str]:
         lines = []
         for query, count in Counter(
             [q['sql'] for q in self.queries],
@@ -158,7 +155,7 @@ class QueryLogger:
             )
         return lines
 
-    def generate_detailed_lines(self) -> List[str]:
+    def generate_detailed_lines(self) -> list[str]:
         lines = []
         if self.duplicates:
             lines.append(colorize('Duplicate queries:'))

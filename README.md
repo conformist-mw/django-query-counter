@@ -6,9 +6,14 @@
 ![PyPI - Versions from Framework Classifiers](https://img.shields.io/pypi/frameworkversions/django/django-query-counter)
 
 
-The difference between this project and all the others like it is that I needed
- to debug management command in Django, but all the others only provided middleware,
- which did not solve my problem.
+A small debug tool that counts the SQL queries Django runs and prints a summary
+ to the console — including duplicate queries (the usual sign of an N+1 problem)
+ and the slowest ones, similar to what django-debug-toolbar shows in the browser.
+
+Unlike most similar tools, which only ship a middleware, this one also provides a
+ decorator. That means you can profile not just views but also **management
+ commands**, Celery tasks, or any plain function — which is exactly the use case
+ it was built for.
 
 ## Example output
 
@@ -120,7 +125,9 @@ Default settings:
 
 ```python
 {
+    'DQC_ENABLED': True,  # set to False to disable all output (e.g. in production)
     'DQC_SLOWEST_COUNT': 5,
+    'DQC_DUPLICATED_COUNT': 10,  # max number of duplicate queries to print
     'DQC_TABULATE_FMT': 'pretty',
     'DQC_SLOW_THRESHOLD': 1,  # seconds
     'DQC_INDENT_SQL': True,
@@ -147,5 +154,5 @@ Pygments styles available [here](https://pygments.org/demo/).
 
 ### Contribute
 
-Feel free to open an issue to report of any bugs. Bug fixes and features are
- welcome! Be sure to add yourself to the AUTHORS.md if you provide PR.
+Feel free to open an issue to report any bugs. Bug fixes and features are
+ welcome!
