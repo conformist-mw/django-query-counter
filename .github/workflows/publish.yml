@@ -6,9 +6,12 @@ on:
       - 'v*'
 
 jobs:
-  build:
-    name: build distributions
+  pypi-publish:
+    name: build and publish to PyPI
     runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write  # required for trusted publishing
     steps:
       - uses: actions/checkout@v5
 
@@ -17,24 +20,6 @@ jobs:
 
       - name: build sdist and wheel
         run: uv build
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
-
-  pypi-publish:
-    name: publish to PyPI
-    needs: build
-    runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write  # required for trusted publishing
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: dist
-          path: dist/
 
       - name: publish
         uses: pypa/gh-action-pypi-publish@release/v1
