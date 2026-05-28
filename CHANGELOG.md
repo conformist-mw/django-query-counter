@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0
+
+- drop end-of-life Python 3.9 and Django 3.2/4.0/4.1 (minimum is now Python 3.10 / Django 4.2)
+- automate PyPI publishing and GitHub releases on tag push
+- remove obsolete `default_app_config` shim and minor code cleanup
+
 ## 0.5.0
 
 - added DQC_ENABLED setting to disable output (#24)
