@@ -4,6 +4,7 @@
 [![PyPI version](https://badge.fury.io/py/django-query-counter.svg)](https://badge.fury.io/py/django-query-counter)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/django-query-counter)
 ![PyPI - Versions from Framework Classifiers](https://img.shields.io/pypi/frameworkversions/django/django-query-counter)
+[![Latest on Django Packages](https://img.shields.io/badge/Django%20Packages-django--query--counter-8c3c26.svg)](https://djangopackages.org/packages/p/django-query-counter/)
 
 
 A small debug tool that counts the SQL queries Django runs and prints a summary
