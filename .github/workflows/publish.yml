@@ -13,10 +13,10 @@ jobs:
     permissions:
       id-token: write  # required for trusted publishing
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v10.2.0
 
       - name: build sdist and wheel
         run: uv build
@@ -31,7 +31,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       - name: create release
         env:

@@ -10,7 +10,7 @@ packages = ["query_counter"]
 
 [project]
 name = "django-query-counter"
-version = "0.6.0"
+version = "0.7.0"
 description = "Debug tool to print SQL queries count to the console"
 authors = [{name = "Oleg Smedyuk", email = "oleg.smedyuk@gmail.com"}]
 license = "MIT"
@@ -23,7 +23,7 @@ keywords = [
   "commands",
 ]
 readme = "README.md"
-requires-python = ">= 3.10"
+requires-python = ">= 3.11"
 
 dependencies = [
   "tabulate"
@@ -37,14 +37,11 @@ classifiers = [
   "Operating System :: OS Independent",
   "Topic :: Utilities",
   "Framework :: Django",
-  "Framework :: Django :: 4.2",
-  "Framework :: Django :: 5.0",
-  "Framework :: Django :: 5.1",
   "Framework :: Django :: 5.2",
   "Framework :: Django :: 6.0",
+  "Framework :: Django :: 6.1",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -72,20 +69,16 @@ test = [
   "tabulate",
   "django",
 ]
-django42 = [ "django>=4.2,<5; python_version>='3.10'" ]
-django50 = [ "django>=5,<5.1; python_version>='3.10'" ]
-django51 = [ "django>=5.1,<5.2; python_version>='3.10'" ]
-django52 = [ "django>=5.2,<6; python_version>='3.10'" ]
+django52 = [ "django>=5.2,<6" ]
 django60 = [ "django>=6,<6.1; python_version>='3.12'" ]
+django61 = [ "django>=6.1,<6.2; python_version>='3.12'" ]
 
 [tool.uv]
 conflicts = [
   [
-    { group = "django42" },
-    { group = "django50" },
-    { group = "django51" },
     { group = "django52" },
     { group = "django60" },
+    { group = "django61" },
   ],
 ]
 
@@ -119,11 +112,10 @@ legacy_tox_ini = """
   requires =
       tox>=4.2
   env_list =
-      py314-django{60, 52}
-      py313-django{60, 52, 51}
-      py312-django{60, 52, 51, 50, 42}
-      py311-django{52, 51, 50, 42}
-      py310-django{52, 51, 50, 42}
+      py314-django{61, 60, 52}
+      py313-django{61, 60, 52}
+      py312-django{61, 60, 52}
+      py311-django52
 
   [testenv]
   deps =
@@ -137,11 +129,9 @@ legacy_tox_ini = """
   commands = pytest -Wa -r {posargs:.}
   dependency_groups =
       test
-      django42: django42
-      django50: django50
-      django51: django51
       django52: django52
       django60: django60
+      django61: django61
 
   [testenv:lint]
   description = run linters
