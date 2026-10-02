@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.7.0
+
+- add Django 6.1 support
+- drop end-of-life Python 3.10 and Django 4.2/5.0/5.1 (minimum is now Python 3.11 / Django 5.2)
+- bump GitHub Actions to their latest major versions
+
 ## 0.6.0
 
 - drop end-of-life Python 3.9 and Django 3.2/4.0/4.1 (minimum is now Python 3.10 / Django 4.2)
