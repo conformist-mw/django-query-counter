@@ -69,8 +69,8 @@ test = [
   "tabulate",
   "django",
 ]
-django52 = [ "django>=5.2,<6" ]
-django60 = [ "django>=6,<6.1; python_version>='3.12'" ]
+django52 = [ "django>=6.1,<7" ]
+django60 = [ "django>=6,<6.2; python_version>='3.12'" ]
 django61 = [ "django>=6.1,<6.2; python_version>='3.12'" ]
 
 [tool.uv]
