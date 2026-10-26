@@ -3,6 +3,9 @@
   "extends": [
     "config:recommended"
   ],
+  "lockFileMaintenance": {
+    "enabled": true
+  },
   "packageRules": [
     {
       "description": "Django test-matrix groups pin one minor each; bumping them breaks the matrix",
